@@ -1,0 +1,22 @@
+{
+  "name": "minesweeper",
+  "version": "1.0.0",
+  "description": "Minesweeper game",
+  "scripts": {
+    "start": "snowpack dev",
+    "restart": "snowpack dev --open none",
+    "build": "snowpack build"
+  },
+  "keywords": [
+    "minesweeper",
+    "game",
+    "javascript"
+  ],
+  "author": "SpontanCombust",
+  "license": "MIT",
+  "dependencies": {
+    "@snowpack/plugin-typescript": "^1.2.1",
+    "snowpack": "^3.7.1",
+    "typescript": "^5.2.2"
+  }
+}

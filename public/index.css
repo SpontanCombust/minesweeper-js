@@ -1,0 +1,18 @@
+#canvas {
+    width: 90vw;
+    height: 70vh;
+    align-items: center;
+}
+
+body {
+    background-color: lightgray;
+}
+
+h1 {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    text-align: center;
+}
+
+.stats {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}

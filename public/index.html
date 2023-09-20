@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>Minesweeper</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link rel='stylesheet' type='text/css' media='screen' href='index.css'>
+</head>
+<body>
+    <h1>Minesweeper</h1>
+    <div>
+        <table>
+            <tr>
+                <td class="stats">Bombs left: </td><td class="stats" id="bombsLeft"></td>
+            </tr>
+            <tr>
+                <td class="stats">Time elapsed: </td><td class="stats" id="timeElapsed"></td>
+            </tr>
+        </table>
+    </div>
+    <canvas id="canvas"></canvas>
+    
+    <noscript>You need to enable JavaScript to run this app.</noscript>
+    <script type="module" src='dist/index.js'></script>
+</body>
+</html>
