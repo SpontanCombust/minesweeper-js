@@ -7,6 +7,18 @@ h1 {
     text-align: center;
 }
 
+input {
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+iframe {
+    border: none;
+    width: 90vw;
+    height: 80vh;
+    margin-top: 20px;
+}
+
 .stats {
     font-family: Verdana, Geneva, Tahoma, sans-serif;
     display: flex;
@@ -20,14 +32,9 @@ h1 {
     margin-bottom: 10px;
 }
 
-input {
-    margin-left: 5px;
-    margin-right: 5px;
-}
-
 #canvas {
-    width: 90vw;
-    height: 70vh;
+    width: 600px;
+    height: 600px;
     align-items: center;
     margin-top: 15px;
 }

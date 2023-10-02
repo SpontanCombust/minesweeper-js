@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <title>Game</title>
+    <link rel='stylesheet' type='text/css' media='screen' href='index.css'>
+</head>
+<body>
+    <div id="statistics" class="statsListing">
+        <div class="stats">
+            <span>Bombs left: </span> 
+            <input type="text" id="bombsLeft" readonly/>
+        </div>
+        <div class="stats">
+            <span>Time elapsed: </span>
+            <input type="text" id="timeElapsed" readonly/>
+        </div>
+    </div>
+    <canvas id="canvas"></canvas>
+
+    <noscript>You need to enable JavaScript to run this app.</noscript>
+    <script type="module" src='dist/game.js'></script>
+</body>
+</html>

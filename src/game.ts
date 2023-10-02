@@ -1,6 +1,7 @@
 import { Board } from "./board";
 import Statistics from "./statistics";
 import { Tile, TileState } from "./tile";
+import vec2 from "./vec";
 
 export default class MinesweeperGame {
     private board: Board;
@@ -100,3 +101,13 @@ export default class MinesweeperGame {
         this.stats.bombsLeft = Math.max(0, this.board.getBombCount() - flaggedCount);
     }
 }
+
+
+
+const width = 16;
+const height = 16;
+const bombCount = 32;
+const board = new Board(new vec2(width, height), bombCount);
+const game = new MinesweeperGame(board);
+
+game.start();

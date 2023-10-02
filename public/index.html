@@ -10,16 +10,6 @@
 <body>
     <h1>Minesweeper</h1>
     <div>
-        <div id="statistics" class="statsListing">
-            <div class="stats">
-                <span>Bombs left: </span> 
-                <input type="text" id="bombsLeft" readonly/>
-            </div>
-            <div class="stats">
-                <span>Time elapsed: </span>
-                <input type="text" id="timeElapsed" readonly/>
-            </div>
-        </div>
         <div id="gameParametersForm" class="statsListing">
             <div id="boardSizeForm" class="stats">
                 <span>Board size:</span>
@@ -32,11 +22,8 @@
                 <input type="number" id="bombCountInput" value="32"/>
             </div>
         </div>
-        <button id="resetGameBtn">Reset</input>
+        <button id="resetGameBtn">Reset</button>
     </div>
-    <canvas id="canvas"></canvas>
-    
-    <noscript>You need to enable JavaScript to run this app.</noscript>
-    <script type="module" src='dist/index.js'></script>
+    <iframe id="gameFrame" src="game.html"></iframe>
 </body>
 </html>
