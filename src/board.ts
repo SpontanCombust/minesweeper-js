@@ -26,10 +26,8 @@ export class Board {
         if (canvas == null) {
             throw new Error("Canvas not found");
         }
-        this.canvas = canvas as HTMLCanvasElement;
-        this.canvas.width = this.canvas.offsetWidth;
-        this.canvas.height = this.canvas.offsetHeight;
-        
+        this.canvas = canvas as HTMLCanvasElement;      
+
         const ctx = this.canvas.getContext("2d");
         if (ctx == null) {
             throw new Error("Couldn't get 2D drawing context from the canvas");
@@ -53,6 +51,17 @@ export class Board {
             ev.preventDefault();
             return false; 
         });
+
+        
+        const [w, h] = [
+            TILE_GAP.x + size.x * (TILE_SIZE.x + TILE_GAP.x),
+            TILE_GAP.y + size.y * (TILE_SIZE.y + TILE_GAP.y)
+        ];
+
+        this.canvas.width = w;
+        this.canvas.height = h;
+        this.canvas.style.width = `${w}px`;
+        this.canvas.style.height = `${h}px`;
     }
 
     public draw() {
