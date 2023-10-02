@@ -2,7 +2,7 @@ import { TILE_GAP, TILE_SIZE, Tile, TileState } from "./tile";
 import vec2 from "./vec";
 
 export class Board {
-    public onTileClicked?: (tile: Tile, ev: MouseEvent) => any;
+    public onTileClicked?: (tile: Tile, act: TileAction) => any;
     public isPopulated: boolean = false;
     
     private canvas: HTMLCanvasElement;
@@ -12,6 +12,7 @@ export class Board {
     private maxBombCount: number;
     private bombCount: number;
     private tilesData: Tile[] = [];
+    private touchTimer: number | undefined = undefined;
 
     private static PositionOutOfBoundsError = new Error("Board position out of bounds");
     private static IndexOutOfBoundsError = new Error("Board tile index out of bounds");
@@ -46,10 +47,30 @@ export class Board {
             }
         }
 
-        this.canvas.addEventListener("mousedown", (ev) => this.onMouseClick(ev));
+
+        this.canvas.addEventListener("mousedown", (ev) => {
+            this.onMouseClick(ev);
+        });
         this.canvas.addEventListener("contextmenu", (ev) => { 
             ev.preventDefault();
             return false; 
+        });
+
+        this.canvas.addEventListener("touchstart", (ev) => {
+            this.touchTimer = setTimeout(() => this.onLongTouch(ev), 500); // long touch after 500ms
+        });
+        this.canvas.addEventListener("touchend", (ev) => {
+            if (this.touchTimer) {
+                clearTimeout(this.touchTimer);
+                this.touchTimer = undefined;
+                this.onShortTouch(ev);
+            }
+        });
+        this.canvas.addEventListener("touchmove", (ev) => {
+            if (this.touchTimer) {
+                clearTimeout(this.touchTimer);
+                this.touchTimer = undefined;
+            }
         });
 
         
@@ -211,19 +232,72 @@ export class Board {
         return null;
     }
 
+
+
+
+    
     private onMouseClick(ev: MouseEvent) {
         if (this.onTileClicked) {
-            const offset = this.canvas.getBoundingClientRect();
-            const canvasPos = new vec2(ev.clientX - offset.x, ev.clientY - offset.y);
-            const boardPos = this.canvasToBoardPosition(canvasPos);
-            console.log(`canvasPos=${canvasPos}; boardPos=${boardPos}`);
-            if (boardPos != null) {
-                const tile = this.getTile(boardPos);
-                if (tile != null) {
-                    console.log(`tile=`, tile);
-                    this.onTileClicked(tile, ev);
+            const tile = this.tileFromEvent(ev);
+            if (tile != null) {
+                let tileAction;
+                if (ev.button == 0 || ev.button == 1) {
+                    tileAction = TileAction.Primary;
+                } else if (ev.button == 2) {
+                    tileAction = TileAction.Secondary;
+                }
+
+                if (tileAction != undefined) {
+                    this.onTileClicked(tile, tileAction);
                 }
             }
         }
     }
+
+    private onShortTouch(ev: TouchEvent) {
+        if (this.onTileClicked) {
+            const tile = this.tileFromEvent(ev);
+            if (tile != null) {
+                this.onTileClicked(tile, TileAction.Primary);
+            }
+        }
+    }
+
+    private onLongTouch(ev: TouchEvent) {
+        if (this.onTileClicked) {
+            const tile = this.tileFromEvent(ev);
+            if (tile != null) {
+                navigator.vibrate(100); // vibrate for 100ms
+                this.onTileClicked(tile, TileAction.Secondary);
+            }
+        }
+    }
+
+    private tileFromEvent(ev: MouseEvent | TouchEvent) : Tile | null {
+        const offset = this.canvas.getBoundingClientRect();
+        let clientPos: vec2;
+        if (ev instanceof MouseEvent) {
+            clientPos = new vec2(ev.clientX, ev.clientY);
+        } else if (ev instanceof TouchEvent) {
+            const touch = ev.touches[0] || ev.changedTouches[0];
+            clientPos = new vec2(touch.clientX, touch.clientY);
+        } else {
+            return null;
+        }
+
+        const canvasPos = new vec2(clientPos.x - offset.x, clientPos.y - offset.y);
+        const boardPos = this.canvasToBoardPosition(canvasPos);
+        console.log(`canvasPos=${canvasPos}; boardPos=${boardPos}`);
+
+        if (boardPos != null) {
+            return this.getTile(boardPos);
+        }
+
+        return null;
+    }
+}
+
+export enum TileAction {
+    Primary,
+    Secondary
 }

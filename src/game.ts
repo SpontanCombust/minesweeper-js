@@ -1,4 +1,4 @@
-import { Board } from "./board";
+import { Board, TileAction } from "./board";
 import Statistics from "./statistics";
 import { Tile, TileState } from "./tile";
 import vec2 from "./vec";
@@ -31,13 +31,10 @@ export default class MinesweeperGame {
         window.requestAnimationFrame((ts) => this.gameLoop(ts));
     }
 
-    private handleTileClick(tile: Tile, ev: MouseEvent) {
-        switch(ev.button)
+    private handleTileClick(tile: Tile, action: TileAction) {
+        switch(action)
         {
-            // left mb
-            case 0:
-            // middle mb
-            case 1:
+            case TileAction.Primary:
                 if(!this.board.isPopulated) {
                     this.board.generateContent(tile.boardPosition);
                     this.setBombsLeftCounter();
@@ -54,9 +51,8 @@ export default class MinesweeperGame {
                     }
                 }
                 break;
-
-            // right mb
-            case 2:
+                
+            case TileAction.Secondary:
                 if (tile.state == TileState.Hidden) {
                     tile.state = TileState.HiddenFlagged;
                 } else if (tile.state == TileState.HiddenFlagged) {

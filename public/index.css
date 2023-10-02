@@ -13,8 +13,8 @@ input {
 }
 
 iframe {
-    border: none;
-    width: 90vw;
+    border: 2px solid darkgray;
+    width: 95vw;
     height: 70vh;
     margin-top: 20px;
 }
@@ -43,8 +43,6 @@ iframe {
 }
 
 #canvas {
-    width: 600px;
-    height: 600px;
     margin-top: 15px;
 }
 
@@ -63,7 +61,6 @@ h2, h3 {
 
 #instructions {
     margin-left: 20px;
-    width: 50%;
 }
 
 .instructions {
