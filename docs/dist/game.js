@@ -112,6 +112,7 @@ var _Board = class {
   constructor(size, maxBombCount) {
     this.isPopulated = false;
     this.tilesData = [];
+    this.touchTimer = void 0;
     if (size.x < 3 || size.y < 3) {
       throw new Error("Board size should be at least 3x3");
     }
@@ -135,10 +136,28 @@ var _Board = class {
         this.tilesData.push(new Tile(boardPos, canvasPos));
       }
     }
-    this.canvas.addEventListener("mousedown", (ev) => this.onMouseClick(ev));
+    this.canvas.addEventListener("mousedown", (ev) => {
+      this.onMouseClick(ev);
+    });
     this.canvas.addEventListener("contextmenu", (ev) => {
       ev.preventDefault();
       return false;
+    });
+    this.canvas.addEventListener("touchstart", (ev) => {
+      this.touchTimer = setTimeout(() => this.onLongTouch(ev), 500);
+    });
+    this.canvas.addEventListener("touchend", (ev) => {
+      if (this.touchTimer) {
+        clearTimeout(this.touchTimer);
+        this.touchTimer = void 0;
+        this.onShortTouch(ev);
+      }
+    });
+    this.canvas.addEventListener("touchmove", (ev) => {
+      if (this.touchTimer) {
+        clearTimeout(this.touchTimer);
+        this.touchTimer = void 0;
+      }
     });
     const [w, h] = [
       TILE_GAP.x + size.x * (TILE_SIZE.x + TILE_GAP.x),
@@ -244,23 +263,65 @@ var _Board = class {
   }
   onMouseClick(ev) {
     if (this.onTileClicked) {
-      const offset = this.canvas.getBoundingClientRect();
-      const canvasPos = new vec_default(ev.clientX - offset.x, ev.clientY - offset.y);
-      const boardPos = this.canvasToBoardPosition(canvasPos);
-      console.log(`canvasPos=${canvasPos}; boardPos=${boardPos}`);
-      if (boardPos != null) {
-        const tile = this.getTile(boardPos);
-        if (tile != null) {
-          console.log(`tile=`, tile);
-          this.onTileClicked(tile, ev);
+      const tile = this.tileFromEvent(ev);
+      if (tile != null) {
+        let tileAction;
+        if (ev.button == 0 || ev.button == 1) {
+          tileAction = TileAction.Primary;
+        } else if (ev.button == 2) {
+          tileAction = TileAction.Secondary;
+        }
+        if (tileAction != void 0) {
+          this.onTileClicked(tile, tileAction);
         }
       }
     }
+  }
+  onShortTouch(ev) {
+    if (this.onTileClicked) {
+      const tile = this.tileFromEvent(ev);
+      if (tile != null) {
+        this.onTileClicked(tile, TileAction.Primary);
+      }
+    }
+  }
+  onLongTouch(ev) {
+    if (this.onTileClicked) {
+      const tile = this.tileFromEvent(ev);
+      if (tile != null) {
+        navigator.vibrate(100);
+        this.onTileClicked(tile, TileAction.Secondary);
+      }
+    }
+  }
+  tileFromEvent(ev) {
+    const offset = this.canvas.getBoundingClientRect();
+    let clientPos;
+    if (ev instanceof MouseEvent) {
+      clientPos = new vec_default(ev.clientX, ev.clientY);
+    } else if (ev instanceof TouchEvent) {
+      const touch = ev.touches[0] || ev.changedTouches[0];
+      clientPos = new vec_default(touch.clientX, touch.clientY);
+    } else {
+      return null;
+    }
+    const canvasPos = new vec_default(clientPos.x - offset.x, clientPos.y - offset.y);
+    const boardPos = this.canvasToBoardPosition(canvasPos);
+    console.log(`canvasPos=${canvasPos}; boardPos=${boardPos}`);
+    if (boardPos != null) {
+      return this.getTile(boardPos);
+    }
+    return null;
   }
 };
 var Board = _Board;
 Board.PositionOutOfBoundsError = new Error("Board position out of bounds");
 Board.IndexOutOfBoundsError = new Error("Board tile index out of bounds");
+var TileAction;
+(function(TileAction2) {
+  TileAction2[TileAction2["Primary"] = 0] = "Primary";
+  TileAction2[TileAction2["Secondary"] = 1] = "Secondary";
+})(TileAction || (TileAction = {}));
 
 // docs/dist/statistics.js
 var Statistics = class {
@@ -332,10 +393,9 @@ var MinesweeperGame = class {
     this.lastTimestamp = timestamp;
     window.requestAnimationFrame((ts) => this.gameLoop(ts));
   }
-  handleTileClick(tile, ev) {
-    switch (ev.button) {
-      case 0:
-      case 1:
+  handleTileClick(tile, action) {
+    switch (action) {
+      case TileAction.Primary:
         if (!this.board.isPopulated) {
           this.board.generateContent(tile.boardPosition);
           this.setBombsLeftCounter();
@@ -351,7 +411,7 @@ var MinesweeperGame = class {
           }
         }
         break;
-      case 2:
+      case TileAction.Secondary:
         if (tile.state == TileState.Hidden) {
           tile.state = TileState.HiddenFlagged;
         } else if (tile.state == TileState.HiddenFlagged) {
