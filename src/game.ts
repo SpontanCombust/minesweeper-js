@@ -40,6 +40,7 @@ export default class MinesweeperGame {
                 if(!this.board.isPopulated) {
                     this.board.generateContent(tile.boardPosition);
                     this.setBombsLeftCounter();
+                    this.stats.startTimeCounter();
                 }
 
                 if (tile.state == TileState.Hidden) {
@@ -72,12 +73,14 @@ export default class MinesweeperGame {
             this.board.getTiles()
                       .filter(t => t.hasBomb)
                       .forEach(t => t.state = TileState.Revealed);
+            this.stats.stopTimeCounter();
         } else {
             const anyHiddenWithoutBomb = this.board.getTiles()
                                                    .filter(t => !t.hasBomb && t.state != TileState.Revealed)
                                                    .length > 0;
             if (!anyHiddenWithoutBomb) {
                 console.log("You WON!");
+                this.stats.stopTimeCounter();
             } else if (tile.adjacentBombCount == 0) {
                 this.revealAdjacentTiles(tile);
             }

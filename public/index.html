@@ -10,14 +10,29 @@
 <body>
     <h1>Minesweeper</h1>
     <div>
-        <table>
-            <tr>
-                <td class="stats">Bombs left: </td><td class="stats" id="bombsLeft"></td>
-            </tr>
-            <tr>
-                <td class="stats">Time elapsed: </td><td class="stats" id="timeElapsed"></td>
-            </tr>
-        </table>
+        <div id="statistics" class="statsListing">
+            <div class="stats">
+                <span>Bombs left: </span> 
+                <input type="text" id="bombsLeft" readonly/>
+            </div>
+            <div class="stats">
+                <span>Time elapsed: </span>
+                <input type="text" id="timeElapsed" readonly/>
+            </div>
+        </div>
+        <div id="gameParametersForm" class="statsListing">
+            <div id="boardSizeForm" class="stats">
+                <span>Board size:</span>
+                <div class="stats">
+                    <input type="number" id="boardWidthInput" value="16"/> x <input type="number" id="boardHeightInput" value="16"/>
+                </div>
+            </div>
+            <div id="bombCountForm" class="stats">
+                <span>Bomb count: </span>
+                <input type="number" id="bombCountInput" value="32"/>
+            </div>
+        </div>
+        <button id="resetGameBtn">Reset</input>
     </div>
     <canvas id="canvas"></canvas>
     

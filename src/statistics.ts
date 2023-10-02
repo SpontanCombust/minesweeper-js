@@ -1,39 +1,50 @@
 export default class Statistics {
     public bombsLeft: number = 0;
 
-    private timeElapsedMs: number = 0; 
+    private timerActive: boolean = false;
+    private timeElapsedSec: number = 0; 
 
-    private bombsLeftElem: HTMLElement;
-    private timeElapsedElem: HTMLElement;
+    private bombsLeftElem: HTMLInputElement;
+    private timeElapsedElem: HTMLInputElement;
 
 
     constructor() {
-        const bombsLeftElem = document.getElementById("bombsLeft");
+        const bombsLeftElem = document.getElementById("bombsLeft") as (HTMLInputElement | null);
         if (bombsLeftElem == null) {
-            throw new Error("Not found bombs left counter");
+            throw new Error("Bombs left counter not found");
         }
 
-        const timeElapsedElem = document.getElementById("timeElapsed");
+        const timeElapsedElem = document.getElementById("timeElapsed") as (HTMLInputElement | null);
         if (timeElapsedElem == null) {
-            throw new Error("Not found elapsed time counter");
+            throw new Error("Elapsed time counter not found");
         }
 
         this.bombsLeftElem = bombsLeftElem;
         this.timeElapsedElem = timeElapsedElem;
     }
 
+
+    public startTimeCounter() {
+        this.timerActive = true;
+    }
+
+    public stopTimeCounter() {
+        this.timerActive = false;
+    }
+
     public restartTimeCounter() {
-        this.timeElapsedMs = 0;
+        this.timeElapsedSec = 0;
     }
 
     public updateTimeCounter(dt: number) {
-        this.timeElapsedMs += dt;
+        if (this.timerActive) {
+            this.timeElapsedSec += dt;
+        }
     }
 
-    public draw() {
-        this.bombsLeftElem.innerHTML = this.bombsLeft.toString();
 
-        const timeElapsedSeconds = Math.floor(this.timeElapsedMs / 1000.0);
-        this.timeElapsedElem.innerHTML = timeElapsedSeconds.toString();
+    public draw() {
+        this.bombsLeftElem.value = this.bombsLeft.toString();
+        this.timeElapsedElem.value = Math.floor(this.timeElapsedSec).toString();
     }
 }
