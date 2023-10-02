@@ -104,9 +104,13 @@ export default class MinesweeperGame {
 
 
 
-const width = 16;
-const height = 16;
-const bombCount = 32;
+const queryString = window.location.search;
+const urlParams = new URLSearchParams(queryString);
+
+const width = parseInt(urlParams.get("width") ?? "16");
+const height = parseInt(urlParams.get("height") ?? "16");
+const bombCount = parseInt(urlParams.get("bombCount") ?? "32");
+
 const board = new Board(new vec2(width, height), bombCount);
 const game = new MinesweeperGame(board);
 
