@@ -15,7 +15,7 @@ input {
 iframe {
     border: none;
     width: 90vw;
-    height: 80vh;
+    height: 70vh;
     margin-top: 20px;
 }
 
@@ -55,4 +55,18 @@ iframe {
     margin-left: 50px; 
     padding-bottom: 10px;
     font-stretch: expanded;
+}
+
+h2, h3 {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+#instructions {
+    margin-left: 20px;
+    width: 50%;
+}
+
+.instructions {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: larger;
 }

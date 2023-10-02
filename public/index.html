@@ -25,6 +25,31 @@
         <button id="resetGameBtn">Reset</button>
     </div>
     <iframe id="gameFrame" src="game.html"></iframe>
+    <div id="instructions" class="instructions">
+        <h2>How to play</h2>
+
+        <h3>Rules</h3>
+        <p>
+            The playing board is composed of tiles that may or may not hide a bomb underneath. 
+            The objective of the game is to find and reveal all the tiles that do not contain a bomb.
+        </p>
+        <p>
+            Each tile once uncovered reveals the information on how many tiles adjacent to it contain a bomb. 
+            This information is conveyed through a number written on the tile. 
+            "Adjacent tile" means any one of the 8 tiles surrounding a given tile. 
+            If an uncovered tile doesn't have a number then none of the adjacent tiles hide a bomb.
+        </p>
+        <p>
+            In order to aid yourself with remembering which tiles certainly contain a bomb you can flag a tile.
+            A flagged tile is displayed with "F" written on top of it. Flagging a tile also decreases the "Bombs left" counter.
+            Uncovering an already uncovered tile if around it there are at least as many flagged tiles as the number on this tile suggests,
+            reveals all the adjacent tiles that are not flagged.
+        </p>
+
+        <h3>Controls</h3>
+        <p>Left click - reveal a tile or tiles adjacent to it</p>
+        <p>Right click - flag or unflag a tile</p>
+    </div>
 
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <script type="module" src='dist/index.js'></script>
