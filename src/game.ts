@@ -75,6 +75,7 @@ export default class MinesweeperGame {
                       .filter(t => t.hasBomb)
                       .forEach(t => t.state = TileState.Revealed);
             this.stats.stopTimeCounter();
+            this.stats.announceLoss();
         } else {
             const anyHiddenWithoutBomb = this.board.getTiles()
                                                    .filter(t => !t.hasBomb && t.state != TileState.Revealed)
@@ -82,6 +83,7 @@ export default class MinesweeperGame {
             if (!anyHiddenWithoutBomb) {
                 console.log("You WON!");
                 this.stats.stopTimeCounter();
+                this.stats.announceVictory();
             } else if (tile.adjacentBombCount == 0) {
                 this.revealAdjacentTiles(tile);
             }

@@ -19,6 +19,16 @@ iframe {
     margin-top: 20px;
 }
 
+.flex-row {
+    display: flex;
+    flex-direction: row;
+}
+
+.flex-column { 
+    display: flex;
+    flex-direction: column;
+}
+
 .stats {
     font-family: Verdana, Geneva, Tahoma, sans-serif;
     display: flex;
@@ -36,4 +46,13 @@ iframe {
     width: 600px;
     height: 600px;
     margin-top: 15px;
+}
+
+#gameResult {
+    font-weight: bold;
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    font-size: 40px;
+    margin-left: 50px; 
+    padding-bottom: 10px;
+    font-stretch: expanded;
 }

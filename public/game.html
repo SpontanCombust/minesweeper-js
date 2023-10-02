@@ -6,15 +6,18 @@
     <link rel='stylesheet' type='text/css' media='screen' href='index.css'>
 </head>
 <body>
-    <div id="statistics" class="statsListing">
-        <div class="stats">
-            <span>Bombs left: </span> 
-            <input type="text" id="bombsLeft" readonly/>
+    <div class="flex-row" style="align-items: center;">
+        <div id="statistics" class="statsListing">
+            <div class="stats">
+                <span>Bombs left: </span> 
+                <input type="text" id="bombsLeft" readonly/>
+            </div>
+            <div class="stats">
+                <span>Time elapsed: </span>
+                <input type="text" id="timeElapsed" readonly/>
+            </div>
         </div>
-        <div class="stats">
-            <span>Time elapsed: </span>
-            <input type="text" id="timeElapsed" readonly/>
-        </div>
+        <span id="gameResult"></span>
     </div>
     <canvas id="canvas"></canvas>
 

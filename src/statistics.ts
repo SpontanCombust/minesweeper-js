@@ -6,21 +6,28 @@ export default class Statistics {
 
     private bombsLeftElem: HTMLInputElement;
     private timeElapsedElem: HTMLInputElement;
+    private gameResultElem: HTMLElement;
 
 
     constructor() {
         const bombsLeftElem = document.getElementById("bombsLeft") as (HTMLInputElement | null);
         if (bombsLeftElem == null) {
-            throw new Error("Bombs left counter not found");
+            throw new Error("Bombs left counter element not found");
         }
 
         const timeElapsedElem = document.getElementById("timeElapsed") as (HTMLInputElement | null);
         if (timeElapsedElem == null) {
-            throw new Error("Elapsed time counter not found");
+            throw new Error("Elapsed time counter element not found");
+        }
+
+        const gameResultElem = document.getElementById("gameResult");
+        if (gameResultElem == null) {
+            throw new Error("Game result element not found");
         }
 
         this.bombsLeftElem = bombsLeftElem;
         this.timeElapsedElem = timeElapsedElem;
+        this.gameResultElem = gameResultElem;
     }
 
 
@@ -40,6 +47,17 @@ export default class Statistics {
         if (this.timerActive) {
             this.timeElapsedSec += dt;
         }
+    }
+
+
+    public announceVictory() {
+        this.gameResultElem.innerHTML = "You WON!";
+        this.gameResultElem.style.color = "green"
+    }
+
+    public announceLoss() {
+        this.gameResultElem.innerHTML = "You LOSE!";
+        this.gameResultElem.style.color = "red"
     }
 
 
