@@ -1,0 +1,30 @@
+<!DOCTYPE html><html><head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Minesweeper</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" media="screen" href="index.css">
+</head>
+<body>
+    <h1>Minesweeper</h1>
+    <div>
+        <div id="gameParametersForm" class="statsListing">
+            <div id="boardSizeForm" class="stats">
+                <span>Board size:</span>
+                <div class="stats">
+                    <input type="number" id="boardWidthInput" value="16"> x <input type="number" id="boardHeightInput" value="16">
+                </div>
+            </div>
+            <div id="bombCountForm" class="stats">
+                <span>Bomb count: </span>
+                <input type="number" id="bombCountInput" value="32">
+            </div>
+        </div>
+        <button id="resetGameBtn">Reset</button>
+    </div>
+    <iframe id="gameFrame" src="game.html"></iframe>
+
+    <noscript>You need to enable JavaScript to run this app.</noscript>
+    <script type="module" src="dist/index.js"></script>
+
+</body></html>

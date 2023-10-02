@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../docs/dist/index.js"],
+  "sourcesContent": ["document.getElementById(\"resetGameBtn\")?.addEventListener(\"click\", (ev) => {\n  const widthInput = document.getElementById(\"boardWidthInput\");\n  const heightInput = document.getElementById(\"boardHeightInput\");\n  const bombCountInput = document.getElementById(\"bombCountInput\");\n  const width = widthInput.value;\n  const height = heightInput.value;\n  const bombCount = bombCountInput.value;\n  const gameFrame = document.getElementById(\"gameFrame\");\n  const urlParams = new URLSearchParams([\n    [\"width\", width],\n    [\"height\", height],\n    [\"bombCount\", bombCount]\n  ]);\n  gameFrame.src = \"game.html?\" + urlParams.toString();\n});\n"],
+  "mappings": ";AAAA,SAAS,eAAe,iBAAiB,iBAAiB,SAAS,CAAC,OAAO;AACzE,QAAM,aAAa,SAAS,eAAe;AAC3C,QAAM,cAAc,SAAS,eAAe;AAC5C,QAAM,iBAAiB,SAAS,eAAe;AAC/C,QAAM,QAAQ,WAAW;AACzB,QAAM,SAAS,YAAY;AAC3B,QAAM,YAAY,eAAe;AACjC,QAAM,YAAY,SAAS,eAAe;AAC1C,QAAM,YAAY,IAAI,gBAAgB;AAAA,IACpC,CAAC,SAAS;AAAA,IACV,CAAC,UAAU;AAAA,IACX,CAAC,aAAa;AAAA;AAEhB,YAAU,MAAM,eAAe,UAAU;AAAA;",
+  "names": []
+}
